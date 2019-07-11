@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move_target1 : MonoBehaviour
+public class Move_target : MonoBehaviour
 {
     public float speed;
 
@@ -14,6 +14,6 @@ public class Move_target1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.right * speed * Time.deltaTime;
+        transform.position += transform.forward * speed * Time.deltaTime;
     }
 }

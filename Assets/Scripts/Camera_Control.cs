@@ -19,7 +19,7 @@ public class Camera_Control : MonoBehaviour
         {
             transform.GetChild(0).gameObject.SetActive(true);
             transform.GetChild(1).gameObject.SetActive(false);
-            transform.GetChild(0).gameObject.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = targets[1].transform;
+            //transform.GetChild(0).gameObject.GetComponent<Cinemachine.CinemachineVirtualCamera>().Follow = targets[1].transform;
         }
         else if(Input.GetKeyDown("a"))
         {
