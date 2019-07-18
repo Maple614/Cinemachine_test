@@ -6,45 +6,82 @@ using Cinemachine;
 
 public class LookAt_Changer : MonoBehaviour
 {
-    [SerializeField] Dropdown dropdown;
-    public Transform[] targets_;
-    [SerializeField] GameObject vcam_obj;
-    private CinemachineVirtualCamera vcam;
-    private Vector3 init_rot;
+    [SerializeField] Dropdown lookat_dropdown;
+    public Transform[] lookat_targets_;
 
+    public Get_Current_vcam get_current_vcam;
+
+    private int vcam_len;
+    GameObject current_vcam_obj;
+    CinemachineVirtualCamera current_vcam;
+
+    Vector3[] init_rot;
+
+    int current_index;
+
+
+    private void Awake()
+    {
+        // init each vcam rot
+        vcam_len = get_current_vcam.Vcam_len;
+        init_rot = new Vector3[vcam_len];
+
+
+        for (int i = 0; i < vcam_len; i++)
+        {
+            init_rot[i] = get_current_vcam.Get_init_transform(i).localEulerAngles;
+        }
+
+        // add Drop Down Options
+        foreach (var l_target in lookat_targets_)
+        {
+            lookat_dropdown.options.Add(new Dropdown.OptionData { text = l_target.name });
+        }
+        lookat_dropdown.options.Add(new Dropdown.OptionData { text = "None" });
+        lookat_dropdown.options.Add(new Dropdown.OptionData { text = "None & re-rot" });
+
+        lookat_dropdown.value = lookat_targets_.Length;
+        lookat_dropdown.RefreshShownValue();
+
+    }
+
+    // Start is called before the first frame update
     void Start()
     {
-        init_rot = vcam_obj.transform.localEulerAngles;
-        vcam = vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
-        dropdown.value = 4;
+        current_vcam_obj = get_current_vcam.Current_vcam;
+        current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //current_vcam_obj = get_current_vcam.Current_vcam;
+        //current_index = get_current_vcam.Current_index;
+        //current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
+    }
+
 
     public void ChangeLookAt()
     {
-        if(dropdown.value == 0)
+//        Debug.Log($"{get_current_vcam.Current_vcam.name}");
+        current_vcam_obj = get_current_vcam.Current_vcam;
+        current_index = get_current_vcam.Current_index;
+        current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
+
+        if (lookat_dropdown.value < lookat_targets_.Length)
         {
-            vcam.m_LookAt = targets_[0];
+            current_vcam.m_LookAt = lookat_targets_[lookat_dropdown.value];
         }
-        else if (dropdown.value == 1)
+
+        else if (lookat_dropdown.value == lookat_targets_.Length)
         {
-            vcam.m_LookAt = targets_[1];
-        }
-        else if (dropdown.value == 2)
-        {
-            vcam.m_LookAt = targets_[2];
-        }
-        else if (dropdown.value == 3)
-        {
-            vcam.m_LookAt = targets_[3];
-        }
-        else if (dropdown.value == 4)
-        {
-            vcam.m_LookAt = null;
+            current_vcam.m_LookAt = null;
         }
         else
         {
-            vcam.m_LookAt = null;
-            vcam_obj.transform.localEulerAngles = new Vector3(init_rot.x, init_rot.y, init_rot.z);
+            current_vcam.m_LookAt = null;
+            current_vcam_obj.transform.localEulerAngles = new Vector3(init_rot[current_index].x,
+                init_rot[current_index].y, init_rot[current_index].z);
         }
     }
 }

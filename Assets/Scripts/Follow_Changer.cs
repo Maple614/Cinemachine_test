@@ -6,56 +6,82 @@ using Cinemachine;
 
 public class Follow_Changer : MonoBehaviour
 {
-    [SerializeField] Dropdown dropdown;
-    public Transform[] targets_;
-    [SerializeField] public GameObject vcam_obj;
-    private CinemachineVirtualCamera vcam;
-    private Vector3 init_pos;
-    private CinemachineTransposer vcam_trans;
+    [SerializeField] Dropdown follow_dropdown;
+    public Transform[] follow_targets_;
 
+    public Get_Current_vcam get_current_vcam;
+
+    int vcam_len;
+    GameObject current_vcam_obj;
+    CinemachineVirtualCamera current_vcam;
+
+    Vector3[] init_pos;
+
+    int current_index;
+
+
+    private void Awake()
+    {
+        // init each vcam pos
+        vcam_len = get_current_vcam.Vcam_len;
+        init_pos = new Vector3[vcam_len];
+
+
+        for (int i = 0; i < vcam_len; i++)
+        {
+            init_pos[i] = get_current_vcam.Get_init_transform(i).position;
+        }
+
+        // add Drop Down Options
+        foreach (var f_target in follow_targets_)
+        {
+            follow_dropdown.options.Add(new Dropdown.OptionData { text = f_target.name });
+        }
+        follow_dropdown.options.Add(new Dropdown.OptionData { text = "None" });
+        follow_dropdown.options.Add(new Dropdown.OptionData { text = "None & re-pos" });
+
+        follow_dropdown.value = follow_targets_.Length;
+        follow_dropdown.RefreshShownValue();
+
+    }
+
+    // Start is called before the first frame update
     void Start()
     {
-        init_pos = vcam_obj.transform.position;
-        vcam = vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
-        vcam_trans = vcam.GetCinemachineComponent<CinemachineTransposer>();
-        dropdown.value = 4;
+        current_vcam_obj = get_current_vcam.Current_vcam;
+        current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
+
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Debug.Log($"{get_current_vcam.Current_vcam.name}");
+    }
+
 
     public void ChangeFollow()
     {
-        vcam_obj = this.GetComponent<GameObject>();
+        Debug.Log($"{get_current_vcam.Current_vcam.name}");
+        Debug.Log($"{follow_dropdown.value}");
+        current_vcam_obj = get_current_vcam.Current_vcam;
+        current_index = get_current_vcam.Current_index;
+        current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
 
-        if(dropdown.value == 0)
+        if (follow_dropdown.value < follow_targets_.Length)
         {
-            Debug.Log($"vcam_x {vcam_obj.transform.position.x}");
-            Debug.Log($"vcam_y {vcam_obj.transform.position.y}");
-            Debug.Log($"vcam_z {vcam_obj.transform.position.z}");
+            current_vcam.m_Follow = follow_targets_[follow_dropdown.value];
+        }
 
-            vcam.m_Follow = targets_[0];
-            vcam_trans.m_FollowOffset.x = vcam_obj.transform.position.x;
-            vcam_trans.m_FollowOffset.y = vcam_obj.transform.position.y;
-            vcam_trans.m_FollowOffset.z = vcam_obj.transform.position.z;
-        }
-        else if (dropdown.value == 1)
+        else if (follow_dropdown.value == follow_targets_.Length)
         {
-            vcam.m_Follow = targets_[1];
-        }
-        else if (dropdown.value == 2)
-        {
-            vcam.m_Follow = targets_[2];
-        }
-        else if (dropdown.value == 3)
-        {
-            vcam.m_Follow = targets_[3];
-        }
-        else if (dropdown.value == 4)
-        {
-            vcam.m_Follow = null;
+            current_vcam.m_Follow = null;
         }
         else
         {
-            vcam.m_Follow = null;
-            vcam_obj.transform.position = new Vector3(init_pos.x, init_pos.y, init_pos.z);
+            current_vcam.m_Follow = null;
+            current_vcam_obj.transform.position = new Vector3(init_pos[current_index].x,
+                init_pos[current_index].y, init_pos[current_index].z);
         }
     }
 }
