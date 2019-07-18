@@ -50,20 +50,13 @@ public class Follow_Changer : MonoBehaviour
     {
         current_vcam_obj = get_current_vcam.Current_vcam;
         current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Debug.Log($"{get_current_vcam.Current_vcam.name}");
     }
 
 
     public void ChangeFollow()
     {
-        Debug.Log($"{get_current_vcam.Current_vcam.name}");
-        Debug.Log($"{follow_dropdown.value}");
+        //Debug.Log($"{get_current_vcam.Current_vcam.name}");
+        //Debug.Log($"{follow_dropdown.value}");
         current_vcam_obj = get_current_vcam.Current_vcam;
         current_index = get_current_vcam.Current_index;
         current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();

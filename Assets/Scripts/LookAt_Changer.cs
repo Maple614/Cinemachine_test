@@ -45,25 +45,16 @@ public class LookAt_Changer : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         current_vcam_obj = get_current_vcam.Current_vcam;
         current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //current_vcam_obj = get_current_vcam.Current_vcam;
-        //current_index = get_current_vcam.Current_index;
-        //current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
-    }
 
 
     public void ChangeLookAt()
     {
-//        Debug.Log($"{get_current_vcam.Current_vcam.name}");
         current_vcam_obj = get_current_vcam.Current_vcam;
         current_index = get_current_vcam.Current_index;
         current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
