@@ -22,6 +22,15 @@ public class LookAt_Changer : MonoBehaviour
 
     private void Awake()
     {
+
+    }
+
+    void Start()
+    {
+        current_vcam_obj = get_current_vcam.Current_vcam;
+        current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
+
+
         // init each vcam rot
         vcam_len = get_current_vcam.Vcam_len;
         init_rot = new Vector3[vcam_len];
@@ -42,13 +51,6 @@ public class LookAt_Changer : MonoBehaviour
 
         lookat_dropdown.value = lookat_targets_.Length;
         lookat_dropdown.RefreshShownValue();
-
-    }
-
-    void Start()
-    {
-        current_vcam_obj = get_current_vcam.Current_vcam;
-        current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
     }
 
 

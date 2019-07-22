@@ -20,8 +20,12 @@ public class Follow_Changer : MonoBehaviour
     int current_index;
 
 
-    private void Awake()
+    // Start is called before the first frame update
+    void Start()
     {
+        current_vcam_obj = get_current_vcam.Current_vcam;
+        current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
+
         // init each vcam pos
         vcam_len = get_current_vcam.Vcam_len;
         init_pos = new Vector3[vcam_len];
@@ -40,27 +44,21 @@ public class Follow_Changer : MonoBehaviour
         follow_dropdown.options.Add(new Dropdown.OptionData { text = "None" });
         follow_dropdown.options.Add(new Dropdown.OptionData { text = "None & re-pos" });
 
+
+
+
         follow_dropdown.value = follow_targets_.Length;
         follow_dropdown.RefreshShownValue();
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        current_vcam_obj = get_current_vcam.Current_vcam;
-        current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
-    }
-
 
     public void ChangeFollow()
     {
-        //Debug.Log($"{get_current_vcam.Current_vcam.name}");
-        //Debug.Log($"{follow_dropdown.value}");
+
         current_vcam_obj = get_current_vcam.Current_vcam;
         current_index = get_current_vcam.Current_index;
         current_vcam = current_vcam_obj.GetComponent<Cinemachine.CinemachineVirtualCamera>();
-
         if (follow_dropdown.value < follow_targets_.Length)
         {
             current_vcam.m_Follow = follow_targets_[follow_dropdown.value];
