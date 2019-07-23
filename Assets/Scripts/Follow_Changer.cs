@@ -37,7 +37,7 @@ public class Follow_Changer : MonoBehaviour
         {
             vcam_obj[i] = get_current_vcam.Get_Vcam(i);
             vcam[i] = vcam_obj[i].GetComponent<CinemachineVirtualCamera>();
-            init_pos[i] = get_current_vcam.Get_init_transform(i).position;
+            init_pos[i] = vcam_obj[i].transform.position;
 
             // set follow none
             vcam_target[i] = follow_targets_.Length;
@@ -61,12 +61,12 @@ public class Follow_Changer : MonoBehaviour
 
     private void Update()
     {
-        // if change vcam_index reflect on slider
+        // if change vcam_index reflect on dropdown
         int temp_index = get_current_vcam.Current_index;
         if (current_index != temp_index)
         {
             current_index = temp_index;
-            Reflect_DropDownValue();
+            follow_dropdown.value = vcam_target[current_index];
         }
     }
 
@@ -92,9 +92,4 @@ public class Follow_Changer : MonoBehaviour
         }
     }
 
-    // value reflect on DropDown if change active vcam
-    void Reflect_DropDownValue()
-    {
-        follow_dropdown.value = vcam_target[current_index];
-    }
 }

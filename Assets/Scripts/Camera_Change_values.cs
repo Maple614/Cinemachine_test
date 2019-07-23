@@ -34,14 +34,14 @@ public class Camera_Change_values : MonoBehaviour
                 .GetCinemachineComponent<CinemachineComposer>();
 
 
-            sliders_values[i,0] = vcam_comp[i].m_DeadZoneWidth;
-            sliders_values[i,1] = vcam_comp[i].m_DeadZoneHeight;
+            sliders_values[i, 0] = vcam_comp[i].m_DeadZoneWidth;
+            sliders_values[i, 1] = vcam_comp[i].m_DeadZoneHeight;
 
-            sliders_values[i,2] = vcam_comp[i].m_SoftZoneWidth;
-            sliders_values[i,3] = vcam_comp[i].m_SoftZoneHeight;
+            sliders_values[i, 2] = vcam_comp[i].m_SoftZoneWidth;
+            sliders_values[i, 3] = vcam_comp[i].m_SoftZoneHeight;
 
-            sliders_values[i,4] = vcam_comp[i].m_BiasX;
-            sliders_values[i,5] = vcam_comp[i].m_BiasY;
+            sliders_values[i, 4] = vcam_comp[i].m_BiasX;
+            sliders_values[i, 5] = vcam_comp[i].m_BiasY;
 
             sliders_values[i, 6] = vcam_comp[i].m_TrackedObjectOffset.x;
             sliders_values[i, 7] = vcam_comp[i].m_TrackedObjectOffset.y;

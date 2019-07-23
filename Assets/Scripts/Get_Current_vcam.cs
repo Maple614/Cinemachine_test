@@ -6,7 +6,6 @@ public class Get_Current_vcam : MonoBehaviour
 {
     public GameObject[] vcams;
     public int Vcam_len { get { return vcams.Length; } }
-    public GameObject Current_vcam { get { return m_current_vcam; } }
     public int Current_index { get { return m_index; } }
 
     private GameObject m_current_vcam;
@@ -16,6 +15,7 @@ public class Get_Current_vcam : MonoBehaviour
     {
         m_current_vcam = vcams[0];
         m_index = 0;
+        unable_other_vcam();
     }
 
     // Update is called once per frame
@@ -81,11 +81,6 @@ public class Get_Current_vcam : MonoBehaviour
             m_index = 9;
             unable_other_vcam();
         }
-    }
-
-    public Transform Get_init_transform(int index)
-    {
-        return vcams[index].transform;
     }
 
     public GameObject Get_Vcam(int index)

@@ -30,12 +30,14 @@ public class LookAt_Changer : MonoBehaviour
         init_rot = new Vector3[vcam_len];
         vcam_target = new int[vcam_len];
 
+        current_index = get_current_vcam.Current_index;
+
 
         for (int i = 0; i < vcam_len; i++)
         {
             vcam_obj[i] = get_current_vcam.Get_Vcam(i);
             vcam[i] = vcam_obj[i].GetComponent<CinemachineVirtualCamera>();
-            init_rot[i] = get_current_vcam.Get_init_transform(i).localEulerAngles;
+            init_rot[i] = vcam_obj[i].transform.localEulerAngles;
 
             vcam_target[i] = lookat_targets_.Length;
         }
@@ -55,12 +57,12 @@ public class LookAt_Changer : MonoBehaviour
 
     private void Update()
     {
-        // if change vcam_index reflect on slider
+        // if change vcam_index reflect on dropdown
         int temp_index = get_current_vcam.Current_index;
         if (current_index != temp_index)
         {
             current_index = temp_index;
-            Reflect_DropDownValue();
+            lookat_dropdown.value = vcam_target[current_index];
         }
     }
 
@@ -86,12 +88,4 @@ public class LookAt_Changer : MonoBehaviour
                 init_rot[current_index].y, init_rot[current_index].z);
         }
     }
-
-
-    // value reflect on DropDown if change active vcam
-    void Reflect_DropDownValue()
-    {
-        lookat_dropdown.value = vcam_target[current_index];
-    }
-
 }
