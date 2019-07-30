@@ -5,6 +5,7 @@ using UnityEngine;
 public class Get_Current_vcam : MonoBehaviour
 {
     public GameObject[] vcams;
+    public GameObject[] pivots;
     public int Vcam_len { get { return vcams.Length; } }
     public int Current_index { get { return m_index; } }
 
@@ -86,6 +87,11 @@ public class Get_Current_vcam : MonoBehaviour
     public GameObject Get_Vcam(int index)
     {
         return vcams[index];
+    }
+
+    public Transform Get_Pivot(int index)
+    {
+        return pivots[index].transform;
     }
 
     public void unable_other_vcam()
