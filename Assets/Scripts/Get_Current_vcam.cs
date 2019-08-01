@@ -14,8 +14,8 @@ public class Get_Current_vcam : MonoBehaviour
 
     private void Awake()
     {
-        m_current_vcam = vcams[0];
-        m_index = 0;
+        m_current_vcam = vcams[1];
+        m_index = 1;
         unable_other_vcam();
     }
 
